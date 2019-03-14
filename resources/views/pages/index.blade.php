@@ -1,11 +1,11 @@
 
     @extends('layouts.app')
-
+    
     @section('content')
         <div class ="jumbotron text-center">
         <h1 style ="text-align:center">{{$title}}</h1>
         <p style ="text-align:center">this is the laravel application from the "Laravel from scratch"</p>
-        <p><a class ="btn btn-primary btn-lg" href="/login" role="button">Login</a> <a class ="btn btn-success brtn-lg" href="/register" role="button">Rigister</a></p>
+        <p><a class ="btn btn-primary btn-lg" href="/login" role="button">Login</a> <a class ="btn btn-success brtn-lg" href="/register" role="button">Register</a></p>
         </div>
     @endsection
 
