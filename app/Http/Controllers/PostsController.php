@@ -8,6 +8,16 @@ use DB;
 
 class PostsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+      public function __construct()
+     {
+        $this->middleware('auth',['except' =>['index','show']]);
+     }
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +33,7 @@ class PostsController extends Controller
         // $posts = Post::orderby('title', 'desc')->take(1)->get();
         // $posts = Post::orderby('title', 'desc')->paginate(1);
         $posts = Post::orderby('created_at','desc')->paginate(1);
+        // $posts = Post::orderby('created_at', 'asc')->paginate(1);
         return view('posts.index')->with('posts',$posts);
     }
 
@@ -54,6 +65,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
         $post->save();
         
         return redirect('/posts')->with('success','Post Created');
@@ -79,7 +91,13 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        //check for correct user
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('error','unauthorized page');
+        }
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -91,7 +109,20 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+        'title' => 'required',
+        'body' => 'required',
+         ]);
+       // return "<h4><i>From Submitted!</i></h4>";
+       //create Post
+
+       $post = Post::find($id);
+       $post->title = $request->input('title');
+       $post->body = $request->input('body');
+       $post->save();
+
+       return redirect('/posts')->with('success', 'Post Created');
+
     }
 
     /**
@@ -102,6 +133,8 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+          $post = POST::find($id);
+          $post->delete();
+          return redirect('/posts')->with('success'.'Post Remove');
     }
 }
