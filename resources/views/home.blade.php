@@ -19,9 +19,9 @@
                         @if(count($posts) > 0)
                         <table class="table table-striped">
                             <tr>
-                                <td>Title</td>
-                                <td></td>
-                                <td></td>
+                                <th>Title</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             @foreach ($posts as $post)
                                 <tr>
@@ -41,6 +41,11 @@
                         <p>You have no post</p>
                         @endif
                     </div>
+                    {{-- <div id="app">
+                        <passport-clients></passport-clients>
+                        <passport-authorized-clients></passport-authorized-clients>
+                        <passport-personal-access-tokens></passport-personal-access-tokens>
+                    </div> --}}
                     {{-- You are logged in! --}}
                 </div>
             </div>
