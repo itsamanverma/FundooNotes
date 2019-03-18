@@ -3,18 +3,18 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+class UserTest extends TestCase
 {
     /**
-     * A basic test example.
+     * A basic feature test example.
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testExample()
     {
-         //$this->visit('/')->see('Laravel');
         $response = $this->get('/');
 
         $response->assertStatus(200);
