@@ -13,12 +13,12 @@
 
 
  
-/*
-Route::get('/hello', function () {
-    // return view('hello World');
-    return 'hello world';
-});
 
+// Route::get('/hello', function () {
+//     // return view('hello World');
+//     return 'hello world';
+// });
+/*
 Route::get('/users/{id}/{name}', function ($name, $id) {
     return ' this is user ' . $name . ' with user id ' . $id;
 });
