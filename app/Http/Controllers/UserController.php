@@ -17,9 +17,13 @@ class UserController extends Controller
  */
     public function login()
     {
+        $email = request('email');
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('MyApp')->accessToken;
+            if($user->email_verified_at === null){
+               return  response()->json(['message' => 'Email Not verified'],211);
+            }
             return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -31,7 +35,8 @@ class UserController extends Controller
  * @return \Illuminate\Http\Response
  */
     public function register(Request $request)
-    {
+    {   
+        $input = $request->all();
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:20',
             'email' => 'required|email|unique:users',
@@ -39,16 +44,17 @@ class UserController extends Controller
             'c_password' => 'required|same:password',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 201);
         }
-        $input = $request->all();
+        // $input = $request->all();
         $input['created_at'] = now();
         $input['password'] = bcrypt($input['password']);
-        
+        $input['verifytoken'] = str_random(60);
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['name'] = $user->name;
-        return response()->json(['success' => $success], $this->successStatus);
+        // event(new UserRegistered($user,$input['verifytoken']));
+        return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
     }
 /**
  * details api
