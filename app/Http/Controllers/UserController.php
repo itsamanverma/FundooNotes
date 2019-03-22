@@ -26,7 +26,7 @@ class UserController extends Controller
             }
             return response()->json(['success' => $success], $this->successStatus);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Unauthorised'], 204);
         }
     }
 /**
@@ -38,13 +38,14 @@ class UserController extends Controller
     {   
         $input = $request->all();
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:20',
+            'firstname' => 'required|string|max:25',
+            'lastname' => 'required|string|max:25',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|max:15',
+            'password' => 'required|min:8|max:15|confirmed',
             'c_password' => 'required|same:password',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 201);
+        return response()->json(['error' => $validator->errors()], 201);
         }
         // $input = $request->all();
         $input['created_at'] = now();
@@ -52,8 +53,8 @@ class UserController extends Controller
         $input['verifytoken'] = str_random(60);
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['name'] = $user->name;
-        // event(new UserRegistered($user,$input['verifytoken']));
+        $success['firstname'] = $user->firstname;
+        event(new UserRegistered($user,$input['verifytoken']));
         return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
     }
 /**
