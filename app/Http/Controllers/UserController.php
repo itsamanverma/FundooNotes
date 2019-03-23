@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Http\Request;    
-use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Events\UserRegistered;
 
 class UserController extends Controller
 {
@@ -24,6 +24,7 @@ class UserController extends Controller
             if($user->email_verified_at === null){
                return  response()->json(['message' => 'Email Not verified'],211);
             }
+            // $token = $user->createToken('MyApp')->accessToken;
             return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 204);
@@ -41,9 +42,9 @@ class UserController extends Controller
             'firstname' => 'required|string|max:25',
             'lastname' => 'required|string|max:25',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|max:15|confirmed',
+            'password' => 'required|min:8|max:15',
             'c_password' => 'required|same:password',
-        ]);
+        ]); 
         if ($validator->fails()) {
         return response()->json(['error' => $validator->errors()], 201);
         }

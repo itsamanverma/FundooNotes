@@ -1,12 +1,7 @@
 <?php
-
 /**
- * event for user registered
- * execute automatically by registeration api at successfully registration
- *
- * correspounding listener = app\listeners\SendVerificationMail
+ * 
  */
-
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
@@ -17,23 +12,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-use App\Users;
-
 class UserRegistered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-      
-    public $token;
-    public $user;
+     public $user;
+     public $token;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user,$token)
     {
+        $this->user = $user;
         $this->token = $token;
-        $this->user  = $user;
     }
 
     /**
