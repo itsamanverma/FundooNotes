@@ -25,7 +25,7 @@ class UserController extends Controller
             if($user->email_verified_at === null){
                return  response()->json(['message' => 'Email Not verified'],211);
             }
-            // $token = $user->createToken('MyApp')->accessToken;
+            //$token = $user->createToken('MyApp')->accessToken;
             return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 204);
@@ -68,6 +68,23 @@ class UserController extends Controller
     {
         $user = Auth::user();
         return response()->json(['success' => $user], $this->successStatus);
+    }
+
+    /**
+     * write the function to verify the user & the add the time stamp to the verified_at field
+     * 
+     * @return response
+     */
+    public function verifyEmail(){
+        $id = request('id');
+        $token = request('token');
+        $user = User::where('verifytoken',$token)->first();
+        if(!$user){
+            return response()->json(['message' => "Not a Registered Email"], 200);
+        }else if($user->email_verified_at === null){
+         $user->email_verified_at = now();
+               
+        }
     }
 }
  
