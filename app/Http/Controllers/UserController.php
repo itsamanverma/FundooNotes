@@ -75,7 +75,7 @@ class UserController extends Controller
      * 
      * @return response
      */
-    public function verifyEmail(){
+        public function verifyEmail(){
         $id = request('id');
         $token = request('token');
         $user = User::where('verifytoken',$token)->first();
@@ -83,8 +83,17 @@ class UserController extends Controller
             return response()->json(['message' => "Not a Registered Email"], 200);
         }else if($user->email_verified_at === null){
          $user->email_verified_at = now();
-               
+         $user->save();
+            return response()->json(['message' => "Email is Successfully verified"],201);      
+        }else{
+            return response()->json(['message' => "Email Already verified"],202);
         }
     }
+
+    /**
+     * write the function for forgot password.
+     * 
+     * @
+     */
 }
  
