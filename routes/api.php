@@ -33,6 +33,9 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'UserController@login')->name('login');
 Route::post('register', 'UserController@register');
+Route::post('verifyemail','UserController@verifyEmail');
+Route::post('forgotpassword','ResetPasswordController@create');
+
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'UserController@details');
 });

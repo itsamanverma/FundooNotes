@@ -93,7 +93,15 @@ class UserController extends Controller
     /**
      * write the function for forgot password.
      * 
-     * @
+     * @return response
      */
+    public function forgotPassword(){
+        $validator = validator::make($request->all(),[
+           'email' => 'bail|required|email|unique:users',
+        ]);
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()],200);
+        }
+    }
 }
  
