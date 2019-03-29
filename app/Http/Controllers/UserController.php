@@ -56,7 +56,7 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['firstname'] = $user->firstname;
-        event(new UserRegistered($user,$input['verifytoken']));
+       // event(new UserRegistered($user,$input['verifytoken']));
         return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
     }
 /**
@@ -103,5 +103,16 @@ class UserController extends Controller
             return response()->json(['error' => $validator->errors()],200);
         }
     }
+      /**
+       * write the function logout 
+       * 
+       * @group logout
+       * @return response
+       */
+       public function logout(){
+          Auth::user()->token()->revoke();
+
+          response()->json(['message' => 'Logout succesfully'],200);
+       }
 }
  
