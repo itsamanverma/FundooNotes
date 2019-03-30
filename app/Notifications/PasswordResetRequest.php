@@ -18,7 +18,7 @@ class PasswordResetRequest extends Notification
      */
     public function __construct()
     {
-        //
+       $this->token = $token;
     }
 
     /**
@@ -40,10 +40,12 @@ class PasswordResetRequest extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = url("/passwordReset/$this->token");
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('you are receiving this email because we want the reset the password of particular email id')
+                    ->action('Reset Password', url($url))
+                    ->line('Link is valid up to 12 hours')
+                    ->line("if you dont want to rese the password,no further action is required");
     }
 
     /**
