@@ -26,6 +26,17 @@ class CreateNotesTable extends Migration
             $table->string('color')->nullable();
             /*create the coloum if notes belongs to the particular user  */
             $table->unsignedInteger('usesid');
+            /* create the colnum to noted the state of notes pinned or unpinned*/
+            $table->boolean('pinned')->default(false);
+            /* create the colnum for notes to getting id the note is archivevd or not*/
+            $table->boolean('archived')->default(false);
+            /*create the colnum for note the if it is delete or not*/
+            $table->boolean('delete')->default(false);
+            /* for saving index of the note */
+            $table->unsignedInteger('index');
+
+            /* makeing the userid foreign key */
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
             
             $table->timestamps();
         });
