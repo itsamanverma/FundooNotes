@@ -54,8 +54,8 @@ class UserController extends Controller
         $input['password'] = bcrypt($input['password']);
         $input['verifytoken'] = str_random(60);
         $user = User::create($input);
-        $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['firstname'] = $user->firstname;
+        // $success['token'] = $user->createToken('MyApp')->accessToken;
+        // $success['firstname'] = $user->firstname;
         event(new UserRegistered($user,$input['verifytoken']));
         return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
     }
@@ -64,10 +64,12 @@ class UserController extends Controller
  *
  * @return \Illuminate\Http\Response
  */
-    public function details()
+    public function userDetails()
     {
-        $user = Auth::user();
-        return response()->json(['success' => $user], $this->successStatus);
+        // $user = Auth::user();
+        // return response()->json(['success' => $user], $this->successStatus);
+        $user = User::with('labels')->find(Auth::user()->id);
+        return response()->json([$user],200);
     }
 
     /**
@@ -111,7 +113,6 @@ class UserController extends Controller
        */
        public function logout(){
           Auth::user()->token()->revoke();
-
           response()->json(['message' => 'Logout succesfully'],200);
        }
 }
