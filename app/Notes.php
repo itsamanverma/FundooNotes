@@ -20,7 +20,7 @@ class Notes extends Model
     {
         Cache::forget('notes' . Auth::user()->id);
         // $noteee = Cache::get('notes'.Auth::user()->id);
-        // $ss = $noteee->where('id',24);
+        // $ss = $noteee->where('id',12);
         $note = Notes::create($data);
         // Cache::remember('notes'.Auth::user()->id, (15), function () {
         //     $nn = Notes::where('userid', Auth::user()->id)->get();

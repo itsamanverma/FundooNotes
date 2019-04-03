@@ -28,7 +28,7 @@ public function testVerifyEmailSuccess()
 $user = User::where('email', 'amanvermame786@gmail.com')->first();
 $token = $user->verifytoken;
 var_dump($token);
-$user->email_verified_at= null;
+$user->email_verified_at = null;
 $user->save();
 $response = $this->withHeaders([
 'Content-Type' => 'Application/json',
@@ -38,7 +38,7 @@ $response = $this->withHeaders([
 $response->assertStatus(201)->assertExactJson([
 "message" => "Email Successfully Verified"
 ]);
-}
+ }
 /**
 * test to verify the email is already verified
 * @group verifyemail
@@ -48,7 +48,7 @@ $response->assertStatus(201)->assertExactJson([
 public function testVerifyEmailAlreadyVerified()
 {
 $user = User::where('email', 'amanvermame786@gmail.com')->first();
-$token = $user->verifytoken;
+$token = $user['verifytoken'];
 var_dump($token);
 $response = $this->withHeaders([
 'Content-Type' => 'Application/json',
@@ -67,7 +67,7 @@ $response->assertStatus(202)->assertExactJson([
 */
 public function testVerifyEmailTokenInvalid()
 {
-$token = 'hdghjgfd';
+$token = 'hdghjgfdgigfdydhfhf1x34';
 $response = $this->withHeaders([
 'Content-Type' => 'Application/json',
 ])->json('POST', '/api/verifyemail', [
@@ -76,5 +76,5 @@ $response = $this->withHeaders([
 $response->assertStatus(200)->assertJsonCount(1)->assertExactJson([
 "message" => "Not a Registered Email"
 ]);
-}
+ }
 }
