@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\PasswordReset;
+use Faker\Factory as Faker;
 
 class PasswordResetTest extends TestCase
 {
@@ -27,11 +28,43 @@ class PasswordResetTest extends TestCase
      */
     public function test_Forgot_Password_Create_Success(){
                 
-     $response = $this->json('POST', '/api/forgotpassword', [
+     $response = $this->json('POST','/api/forgotpassword', [
      ]);
      $response->assertStatus(200);
 
     }
+    /**
+     * write the test class to test that particular email not available  
+     * 
+     * @return information
+     */
+    
+        public function testDatabase()
+       {
+      // Make call to application...
+        //   $faker = Faker::create();
+
+          $this->assertDatabaseMissing('users', [
+        //  'email' => $faker->email
+          'email' =>'amanvermame78678@gmail.com'
+        ]);
+       }
+       /**
+         * write the test class to test that particular email available  
+         * 
+         * @return information
+         */
+    
+         public function test_Database()
+         {
+         // Make call to application...
+         $faker = Faker::create();
+
+         $this->assertDatabaseHas('users', [
+         'email' => $faker->email
+          ]);
+         }
+
     // /**
     //  * write the test class to see the if user request the forgot password
     //  * 

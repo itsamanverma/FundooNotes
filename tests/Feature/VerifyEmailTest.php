@@ -48,7 +48,7 @@ $response->assertStatus(201)->assertExactJson([
 public function testVerifyEmailAlreadyVerified()
 {
 $user = User::where('email', 'amanvermame786@gmail.com')->first();
-$token = $user['verifytoken'];
+$token = $user->verifytoken;
 var_dump($token);
 $response = $this->withHeaders([
 'Content-Type' => 'Application/json',
