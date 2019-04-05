@@ -79,7 +79,6 @@ class UserController extends Controller
      */
         public function verifyEmail(){
         $id = request('id');
-$token = request('token');
         $token = request('token');
         $user = User::where('verifytoken',$token)->first();
         if(!$user){
