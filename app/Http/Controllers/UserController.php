@@ -39,6 +39,7 @@ class UserController extends Controller
     public function register(Request $request)
     {   
         $input = $request->all();
+
         $validator = Validator::make($request->all(), [
             'firstname' => 'required|string|max:25',
             'lastname' => 'required|string|max:25',
@@ -78,7 +79,7 @@ class UserController extends Controller
      * @return response
      */
         public function verifyEmail(){
-        $id = request('id');
+        //$id = request('id');
         $token = request('token');
         $user = User::where('verifytoken',$token)->first();
         if(!$user){
