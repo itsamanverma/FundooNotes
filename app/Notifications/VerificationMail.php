@@ -49,6 +49,8 @@ class VerificationMail extends Notification implements shouldQueue
     public function toMail($notifiable)
     {
         $url = 'verifyemail/$this->token';
+        // var_dump($url);
+        // print_f($url);
         return (new MailMessage)
                     ->line('Welcome to FundooNotes')
                     ->line('Please Verify your email to get started with us')

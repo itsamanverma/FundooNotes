@@ -2,7 +2,6 @@
  
 namespace App\Http\Controllers;
  
- 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -29,7 +28,7 @@ class NotesController extends Controller
         $note = Notes::createNewNote($data);
         return response()->json(['message' => 'Note Created', 'id' => $note->id], 201);
     }
- 
+    
     /**
      * Function to getb all the notes of the user
      * 
