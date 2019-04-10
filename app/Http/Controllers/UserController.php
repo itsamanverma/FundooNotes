@@ -57,7 +57,7 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['firstname'] = $user->firstname;
-        event(new UserRegistered($user,$input['verifytoken']));
+        event(new UserRegistered($user,$user->verifytoken));
         return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
     }
 /**
@@ -78,9 +78,9 @@ class UserController extends Controller
      * 
      * @return response
      */
-        public function verifyEmail(){
-        //$id = request('id');
-        $token = request('token');
+        public function verifyEmail($token){
+        // $id = request('id');
+        // $token = request('token');
         $user = User::where('verifytoken',$token)->first();
         if(!$user){
             return response()->json(['message' => "Not a Registered Email"], 200);

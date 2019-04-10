@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 // use Facades\App\Notes;
 
-use App\Notes;
+ use App\Notes;
   
 class NotesController extends Controller
 {
