@@ -25,7 +25,7 @@ class CreateNotesTable extends Migration
             /*create the color of note */
             $table->string('color')->nullable();
             /*create the coloum if notes belongs to the particular user  */
-            $table->unsignedInteger('usesid');
+            $table->unsignedInteger('userid');
             /* create the colnum to noted the state of notes pinned or unpinned*/
             $table->boolean('pinned')->default(false);
             /* create the colnum for notes to getting id the note is archivevd or not*/

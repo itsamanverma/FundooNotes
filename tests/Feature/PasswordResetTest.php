@@ -65,43 +65,43 @@ class PasswordResetTest extends TestCase
           ]);
          }
 
-    // /**
-    //  * write the test class to see the if user request the forgot password
-    //  * 
-    //  * @group forgotPassword
-    //  * @return void
-    //  */
-    // public function test_ForgotPasswordCreateSuccess(){
-    //     $user = factory(User::class)->create();
+    /**
+     * write the test class to see the if user request the forgot password
+     * 
+     * @group forgotPassword
+     * @return void
+     */
+    public function test_ForgotPasswordCreateSuccess(){
+        $user = factory(User::class)->create();
 
-    //     $response = $this->withHeaders([
-    //         'content-Type' =>'Application/json'
-    //     ])->json('POST','/api/forgotpassword',[
-    //        'email' => $user->email
-    //     ]);
+        $response = $this->withHeaders([
+            'content-Type' =>'Application/json'
+        ])->json('POST','/api/forgotpassword',[
+           'email' => $user->email
+        ]);
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonCount(1)->assertExactJson(['message' => 'we have emailed you password reset link']);
-    // }
+        $response->assertStatus(200)
+        ->assertJsonCount(1)->assertExactJson(['message' => 'we have emailed you password reset link']);
+    }
      
-    // /**
-    //  * write the test class to see if the user cannot request the forgot password using email
-    //  * 
-    //  * @group forgotpassword
-    //  * @return void
-    //  */
-    // public function test_ForgotPasswordCreateFailure(){
-    //      $user = factory(User::class)->create();
+    /**
+     * write the test class to see if the user cannot request the forgot password using email
+     * 
+     * @group forgotpassword
+     * @return void
+     */
+    public function test_ForgotPasswordCreateFailure(){
+         $user = factory(User::class)->create();
 
-    //      $response = $this->withHeaders([
-    //          'Content-Type' => 'Application/Json'
-    //      ])->json('Post','/api/forgotpassword',[
-    //          'email' =>'anbhgj@gmail.com'
-    //      ]);
+         $response = $this->withHeaders([
+             'Content-Type' => 'Application/Json'
+         ])->json('Post','/api/forgotpassword',[
+             'email' =>'cznzdbczk@gmail.com'
+         ]);
 
-    //      $response->assertStatus(200)->assertJsonCount(1)
-    //      ->assertExactJson(
-    //          ['message' => "We can't find a user with that email address."]);
+         $response->assertStatus(200)->assertJsonCount(1)
+         ->assertExactJson(
+             ['message' => "We can't find a user with that email address."]);
 
-    // }
+    }
 }

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
-// use Facades\App\Notes;
+//use Facades\App\Notes;
 
- use App\Notes;
+use App\Notes;
   
 class NotesController extends Controller
 {
@@ -24,10 +24,10 @@ class NotesController extends Controller
     public function create(Request $req)
     {
         $data = $req->all();
-        $data['userid'] = Auth::user()->id;
+        $data['usesid'] = Auth::user()->id;
         $note = Notes::createNewNote($data);
         return response()->json(['message' => 'Note Created', 'id' => $note->id], 201);
-    }
+    } 
     
     /**
      * Function to getb all the notes of the user
