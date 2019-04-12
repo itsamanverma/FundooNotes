@@ -15,7 +15,7 @@ class Notes extends Model
  
     protected $with = ['images'];
  
-    static public function createNewNote($data)
+     public function createNewNote($data)
     {
         Cache::forget('notes' . Auth::user()->id);
         // $noteee = Cache::get('notes'.Auth::user()->id);
