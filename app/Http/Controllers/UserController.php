@@ -21,12 +21,13 @@ class UserController extends Controller
         $email = request('email');
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->accessToken;
+            //$success['token'] = $user->createToken('MyApp')->accessToken;
             if($user->email_verified_at === null){
                return  response()->json(['message' => 'Email Not verified'],211);
             }
-            //$token = $user->createToken('MyApp')->accessToken;
-            return response()->json(['success' => $success], $this->successStatus);
+              $token = $user->createToken('fundoo')->accessToken;
+              return response()->json(['token' => $token,'userdetails'=>Auth::user()],200);
+            //return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 204);
         }
@@ -55,7 +56,7 @@ class UserController extends Controller
         $input['password'] = bcrypt($input['password']);
         $input['verifytoken'] = str_random(60);
         $user = User::create($input);
-        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['token'] = $user->createToken('fundoo')->accessToken;
         $success['firstname'] = $user->firstname;
         event(new UserRegistered($user,$user->verifytoken));
         return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
@@ -112,9 +113,14 @@ class UserController extends Controller
        * @group logout
        * @return response
        */
-       public function logout(){
+       public function logout()
+       {
           Auth::user()->token()->revoke();
           response()->json(['message' => 'Logout succesfully'],200);
        }
+
+       /**
+        * 
+        */
 }
  

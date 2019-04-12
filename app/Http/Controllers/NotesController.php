@@ -21,10 +21,10 @@ class NotesController extends Controller
      * 
      * @return response
      */
-    public function create(Request $req)
+     public function create(Request $req)
     {
         $data = $req->all();
-        $data['usesid'] = Auth::user()->id;
+        $data['userid'] = Auth::user()->id;
         $note = Notes::createNewNote($data);
         return response()->json(['message' => 'Note Created', 'id' => $note->id], 201);
     } 

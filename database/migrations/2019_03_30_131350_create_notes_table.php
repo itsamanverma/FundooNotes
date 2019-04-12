@@ -15,7 +15,7 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             /* for identified the user make id coloum*/
-            $table->bigIncrements('id');
+            $table->increments('id');
             /* create the title of notes*/
             $table->string('title')->nullable();
             /* create the body of the notes*/
