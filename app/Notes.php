@@ -11,7 +11,7 @@ class Notes extends Model
 {
     protected $fillable = [
         'title', 'body', 'reminder', 'color', 'userid', 'pinned', 'archived', 'deleted','index','care'
-    ];
+    ]; 
  
     protected $with = ['images'];
  

@@ -1,6 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+header("Access-Control-Allow-Headers: Authorization");
+header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept, Origin, Authorization
+');
+header("Access-Control-Request-Method: POST");
+
+
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
@@ -120,7 +126,7 @@ class UserController extends Controller
        }
 
        /**
-        * 
+        * create the 
         */
 }
  

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
-//use Facades\App\Notes;
+use Facades\App\Notes;
 
-use App\Notes;
+//use App\Notes;
   
 class NotesController extends Controller
 {
@@ -159,51 +159,51 @@ class NotesController extends Controller
    //      }
    //  }
  
-   //  /**
-   //   * function to save the  indexes of the note in the backend
-   //   * 
-   //   * @var Request
-   //   * @return Response 
-   //   */
-   //  public function saveIndex(Request $req)
-   //  {
-   //      $dragIndex = $req->get('dragIndex');
-   //      $dropIndex = $req->get('dropIndex');
-   //      if ($dragIndex === $dropIndex) {
-   //          return response()->json(["message" => "success"], 200);
-   //      }
+    /**
+     * function to save the  indexes of the note in the backend
+     * 
+     * @var Request
+     * @return Response 
+     */
+    public function saveIndex(Request $req)
+    {
+        $dragIndex = $req->get('dragIndex');
+        $dropIndex = $req->get('dropIndex');
+        if ($dragIndex === $dropIndex) {
+            return response()->json(["message" => "success"], 200);
+        }
  
-   //      $notes = Notes::where('userid', Auth::user()->id)->get();
+        $notes = Notes::where('userid', Auth::user()->id)->get();
  
-   //      if ($dropIndex > $dragIndex) {
-   //          foreach ($notes as $note) {
-   //              if ($note->index > $dragIndex && $note->index <= $dropIndex) {
-   //                  $note->index -= 1;
-   //                  $note->save();
-   //              } elseif ($note->index === $dragIndex) {
-   //                  $note->index = $dropIndex;
-   //                  $note->save();
-   //              } 
-   //              // elseif ($note->index === $dropIndex) {
-   //              //     $note->index = $dragIndex;
-   //              //     $note->save();
-   //              // }
-   //          }
-   //          return response()->json(["message" => "success"], 200);
+        if ($dropIndex > $dragIndex) {
+            foreach ($notes as $note) {
+                if ($note->index > $dragIndex && $note->index <= $dropIndex) {
+                    $note->index -= 1;
+                    $note->save();
+                } elseif ($note->index === $dragIndex) {
+                    $note->index = $dropIndex;
+                    $note->save();
+                } 
+                // elseif ($note->index === $dropIndex) {
+                //     $note->index = $dragIndex;
+                //     $note->save();
+                // }
+            }
+            return response()->json(["message" => "success"], 200);
  
-   //      } else {
-   //          foreach ($notes as $note) {
-   //              if ($note->index >= $dropIndex && $note->index < $dragIndex) {
-   //                  $note->index += 1;
-   //                  $note->save();
+        } else {
+            foreach ($notes as $note) {
+                if ($note->index >= $dropIndex && $note->index < $dragIndex) {
+                    $note->index += 1;
+                    $note->save();
  
-   //              } elseif ($note->index === $dragIndex) {
-   //                  $note->index = $dropIndex;
-   //                  $note->save();
-   //              }
-   //          }
-   //          return response()->json(["message" => "success"], 200);
-   //      }
-   //  }
+                } elseif ($note->index === $dragIndex) {
+                    $note->index = $dropIndex;
+                    $note->save();
+                }
+            }
+            return response()->json(["message" => "success"], 200);
+        }
+    }
  
 }
