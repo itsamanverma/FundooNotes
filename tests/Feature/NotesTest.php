@@ -34,9 +34,12 @@ class NotesTest extends TestCase
         $response = $this->withHeaders([
             'Content-Type' => 'Application/json',
         ])->json('POST', '/api/createnote', [
-            
-            'title'=>'bgsdshjsgdgskjdgkjsgdgsj',
-            'body'=>'jeloofdfhdf dfkkdf'
+            'userid' => '3',
+            'title'=>'notes test',
+            'body'=>'test the notes creation',
+            'index'=>'5',
+            'color'=> 'yellow',
+            'reminder' => 'reminde me at 6'
         ]);
  
         $response->assertStatus(201)->assertJson(['message' => 'Note Created']);

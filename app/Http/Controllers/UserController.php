@@ -126,7 +126,25 @@ class UserController extends Controller
        }
 
        /**
-        * create the 
+        * create the function to login user by social service websites like google,facebook
+        *
+        * all things handled by frontend only authentication part handlen by backend
         */
+
+        public function socialLogin(Request $request)
+        {
+            $input = $request->all();
+            /* $input['created_at'] = now(); */
+            $input['password'] = bycrypt(str_random(8));
+            $input['verifytoken'] = str_random(60);
+
+            $user = User::where([['email',$input['email']]])->first();
+
+            if(!$user) {
+                 $user = User::create($input);
+                 /* verify it first that email is is as it is of SocialLogin email*/
+                 $user->email_verified_at = now();
+            }
+        }
 }
  

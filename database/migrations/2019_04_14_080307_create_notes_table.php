@@ -14,7 +14,7 @@ class CreateNotesTable extends Migration
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
-            //for id 
+           //for id 
             $table->increments('id');
             //title of note 
             $table->string('title')->nullable();
@@ -27,17 +27,17 @@ class CreateNotesTable extends Migration
             //user id if note it belongs to 
             $table->unsignedInteger('userid');
             //state of the note pinned or unpinned
-            $table->boolean('pinned')->default('false');
+            $table->boolean('pinned')->default(0);
             //getting if the note is archived or not 
-            $table->boolean('archived')->default('false');
+            $table->boolean('archived')->default(0);
             //for idf note is delete or not
-            $table->boolean('deleted')->default('false');
+            $table->boolean('deleted')->default(0);
             //for saving the index of the note 
             $table->unsignedInteger('index');
-            
             //making the userid foreign key
             $table->foreign('userid')->references('id')->onDelete('cascade');
             
+
             $table->timestamps();
         });
     }
