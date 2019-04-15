@@ -25,7 +25,7 @@ class NotesTest extends TestCase
      *
      * @return void
      */
-    public function testNoteCreate()
+    public function test_NoteCreate()
     {
         $user = factory(User::class)->create();
         //authenticating as the user
@@ -44,4 +44,24 @@ class NotesTest extends TestCase
  
         $response->assertStatus(201)->assertJson(['message' => 'Note Created']);
     }
+
+    /**
+     * A test to check for request to get the notes of all the user
+     *
+     * @return void
+     */
+    public function test_NotesGetALLNotes()
+    {
+        $user = factory(User::class)->create();
+        //authenticating as the user
+        Passport::actingAs($user);
+       
+        //no authenticateion request
+        $response = $this->withHeaders([
+            'Content-Type' => 'Application/json',
+        ])->json('GET', '/api/getnotes');
+        
+        $response->assertStatus(200)->assertSuccessful();
+    }
+
 }

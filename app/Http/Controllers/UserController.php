@@ -6,6 +6,13 @@ header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept, Or
 ');
 header("Access-Control-Request-Method: POST");
 
+//   headers.append('Content-Type', 'application/json');
+//   headers.append('Accept', 'application/json');
+
+//   headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   headers.append('Access-Control-Allow-Credentials', 'true');
+
+//   headers.append('GET', 'POST', 'OPTIONS');
 
 use App\User;
 use Validator;
@@ -33,6 +40,8 @@ class UserController extends Controller
             }
               $token = $user->createToken('fundoo')->accessToken;
               return response()->json(['token' => $token,'userdetails'=>Auth::user()],200);
+            // return response()->json(123456);
+
             //return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 204);
@@ -145,6 +154,22 @@ class UserController extends Controller
                  /* verify it first that email is is as it is of SocialLogin email*/
                  $user->email_verified_at = now();
             }
+            $user->provider = $input['provider'];
+            $user->providerprofile = $input['providerprofile'];
+            $user->save();
+            Auth::login($user,true);
+            $token = Auth::user()->createtoken('fundoo')->accessToken;
+            return response()->json(['token' => $token ,'userdetails' => Auth::user()],200);   
         }
+
+         /**
+          * function to add the profile pic of the user
+          * 
+          * @var Request
+          * @return Response
+          */
+          public function addProfilepic(Request $re){
+              
+          }
 }
  

@@ -52,7 +52,7 @@ class NotesController extends Controller
      *  @return Response
      */
     public function editNotes(Request $req)
-    {
+    {   
         $data = $req->all();
         $notes = Cache::get('notes' . Auth::user()->id);
        // $note = Notes::with('labels')->where('id', $req->get('id'));
