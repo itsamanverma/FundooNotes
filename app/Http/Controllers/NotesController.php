@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use Facades\App\Notes;
+use App\NoteImages;
 
 //use App\Notes;
   

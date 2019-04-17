@@ -14,7 +14,7 @@ class CreateNotesTable extends Migration
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
-           //for id 
+            //for id 
             $table->increments('id');
             //title of note 
             $table->string('title')->nullable();
@@ -36,8 +36,7 @@ class CreateNotesTable extends Migration
             $table->unsignedInteger('index');
             //making the userid foreign key
             $table->foreign('userid')->references('id')->onDelete('cascade');
-            
-
+                
             $table->timestamps();
         });
     }
