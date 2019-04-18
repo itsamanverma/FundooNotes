@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoteImagesTable extends Migration
+class CreateLablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateNoteImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('note__images', function (Blueprint $table) {
+        Schema::create('lables', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('noteid'); 
-            $table->string('pic');
-            $table->foreign('noteid')->references('id')->on('notes')->onDelete('cascade');
+            $table->string('lable');
+            $table->unsignedInteger('userid');
+            $table->foreign('userid')->references('id')->on('users')->nDelete('cascade');
+
+            //makeing userid & lable as a unique key combinedly
+            $table->unique(['userid','label']);
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateNoteImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('note__images');
+        Schema::dropIfExists('lables');
     }
 }

@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
@@ -38,12 +38,13 @@ class NotesController extends Controller
     public function getNotes()
     {
         Cache::forget('notes' . Auth::user()->id);
-        $notes = Cache::remember('notes' . Auth::user()->id, (30), function () {
-            $nn = Notes::with('labels')->where('userid', Auth::user()->id)->get();
-            return $nn;
-        });
-        // $noteee = Cache::get('notes'.Auth::user()->id);
-        // $ss = $noteee->where('id',24);
+        //  $notes = Cache::remember('notes' . Auth::user()->id, (30), function () {
+        //  $nn = Notes::with('labels')->where('userid', Auth::user()->id)->get();
+        //     return $nn;
+        // }); 
+        // $notes = Cache::get('notes'.Auth::user()->id);
+        // $notes = $notes->where('id',2);
+        $notes = Notes::where('userid','=',Auth::user()->id)->get(); 
         return response()->json(['message' => $notes], 200);
     }
  
@@ -57,7 +58,7 @@ class NotesController extends Controller
         $data = $req->all();
         $notes = Cache::get('notes' . Auth::user()->id);
        // $note = Notes::with('labels')->where('id', $req->get('id'));
-        $note->update(
+        $notes->update(
             [
                 'id' => $req->get('id'),
                 'title' => $req->get('title'),
@@ -108,57 +109,6 @@ class NotesController extends Controller
             return response()->json(['message' => 'note not found'], 204);
         }
     }
- 
-   //  /**
-   //   * function to add a image to the note 
-   //   */
-   //  public function addNotePic(Request $req)
-   //  {
-   //      $rere = $req->get('noteid');
-   //      //we check if request has a file 
-   //      if ($req->hasFile('notePic')) {
-   //          //filename
-   //          $origImage = $req->file('notePic');
-   //          $ext = $req->file('notePic')->getClientOriginalExtension();
-           
-   //          //getting the path of image in temp folder
-   //          $path = $req->file('notePic')->getRealPath();
- 
- 
- 
- 
-   //          Cloudder::upload($path, null);
- 
-   //          list($width, $height) = getimagesize($path);
- 
-   //          $url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
-   //          $url="https://res.cloudinary.com/fundoonotes/image/fetch/".$url;
-   //          list($width, $height) = getimagesize($path);
-   //          $input['noteid'] = $req->get('noteid');
-   //          $input['pic'] = $url;
- 
-   //          NoteImages::create($input);
-   //          return response()->json(['message' => 'Picture Added', 'note' => Notes::with('labels')->where('id', $req->get('noteid'))->get()], 200);
-   //      }
- 
-   //      return response()->json(['meassage' => 'Picture Note Found'], 200);
-   //  }
- 
-    /**
-     * function to delete a note image by id
-     */
-   //  public function deleteNotePic(Request $req)
-   //  {
-   //        // we delete a note and check if no of items deleted is greater than 1
-   //      if (NoteImages::destroy($req->get('imageid')) > 0) {
-   //          Cache::forget('notes' . Auth::user()->id);
-   //          //
-   //          return response()->json(['message' => 'image Deleted', 'note' => Notes::with('labels')->where('id', $req->get('noteid'))->get()], 200);
-   //      } else {
-   //          //return the not found message 
-   //          return response()->json(['message' => 'image note found'], 204);
-   //      }
-   //  }
  
     /**
      * function to save the  indexes of the note in the backend

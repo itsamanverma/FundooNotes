@@ -13,8 +13,6 @@ class Notes extends Model
         'title', 'body', 'reminder', 'color', 'userid', 'pinned', 'archived', 'deleted','index','care'
     ]; 
  
-    protected $with = ['images'];
- 
     public function createNewNote($data)
     {
         Cache::forget('notes' . Auth::user()->id);
@@ -45,9 +43,6 @@ class Notes extends Model
         return $this->hasMany('App\LabelsNotes', 'noteid');
     }
  
-    public function images()
-    {
-        return $this->hasMany('App\NoteImages', 'noteid');
-    }
+    
  
 }

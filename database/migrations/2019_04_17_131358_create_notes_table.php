@@ -35,7 +35,7 @@ class CreateNotesTable extends Migration
             //for saving the index of the note 
             $table->unsignedInteger('index');
             //making the userid foreign key
-            $table->foreign('userid')->references('id')->onDelete('cascade');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
                 
             $table->timestamps();
         });
