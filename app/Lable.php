@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lable extends Model
 {
-   
+    protected $fillable = [
+      'label','userid'
+    ]; 
 }
