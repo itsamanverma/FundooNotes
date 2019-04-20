@@ -75,7 +75,7 @@ class NotesController extends Controller
         Cache::forget('notes' . Auth::user()->id);
  
         // $note->id = $req->get('id');
-        // $note->title = $req->get('title');
+        // $note->title = $req->get('title');          
         // $note->body = $req->get('body');
         // $note->reminder = $req->get('reminder');
         // $note->color = $req->get('color');
