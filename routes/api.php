@@ -37,6 +37,11 @@ Route::get('verifyemail/{token}','UserController@verifyEmail');
 Route::post('forgotpassword','PasswordResetController@create');
 Route::post('forgotpassword/find','PasswordResetController@find');
 Route::post('forgotpassword/reset','PasswordResetController@reset');
+Route::post('sociallogin', 'UserController@socialLogin');
+
+/**
+ * for authentication 
+ */
 
 Route::group(['middleware' => 'auth:api'], function(){
 Route::get('userDetails', 'UserController@userDetails');

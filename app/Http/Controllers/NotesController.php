@@ -38,13 +38,13 @@ class NotesController extends Controller
     public function getNotes()
     {
         Cache::forget('notes' . Auth::user()->id);
-        //  $notes = Cache::remember('notes' . Auth::user()->id, (30), function () {
-        //  $nn = Notes::with('labels')->where('userid', Auth::user()->id)->get();
-        //     return $nn;
-        // }); 
+         $notes = Cache::remember('notes' . Auth::user()->id, (30), function () {
+         $nn = Notes::with('labels')->where('userid', Auth::user()->id)->get();
+            return $nn;
+        }); 
         // $notes = Cache::get('notes'.Auth::user()->id);
         // $notes = $notes->where('id',2);
-        $notes = Notes::where('userid','=',Auth::user()->id)->get(); 
+        // $notes = Notes::where('userid','=',Auth::user()->id)->get(); 
         return response()->json(['message' => $notes], 200);
     }
  
