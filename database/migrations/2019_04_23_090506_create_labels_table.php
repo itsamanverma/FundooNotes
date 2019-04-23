@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLablesTable extends Migration
+class CreateLabelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateLablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lables', function (Blueprint $table) {
+        Schema::create('labels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('lable');
-            $table->unsignedInteger('userid');
-            $table->foreign('userid')->references('id')->on('users')->nDelete('cascade');
+            $table->string('label');
+            $table->unsignedInteger('userid'); 
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
+            
 
-            //makeing userid & lable as a unique key combinedly
-            $table->unique(['userid','label']);
+            //making userid + label as a unique key combinely
+            $table->unique(['userid','label']); 
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateLablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lables');
+        Schema::dropIfExists('labels');
     }
 }

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NoteImages extends Model
+class Labels extends Model
 {
      protected $fillable = [
-        'pic' , 'noteid'
-     ];
+        'label', 'userid', 
+    ];
 }

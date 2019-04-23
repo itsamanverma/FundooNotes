@@ -40,7 +40,8 @@ Route::post('forgotpassword/reset','PasswordResetController@reset');
 Route::post('sociallogin', 'UserController@socialLogin');
 
 /**
- * for authentication 
+ * for authentication checking authentication users
+ * @
  */
 
 Route::group(['middleware' => 'auth:api'], function(){
@@ -50,4 +51,8 @@ Route::get('/getnotes','NotesController@getNotes');
 Route::post('/createnote','NotesController@create');
 Route::post('/editnote','NotesController@editNotes');
 Route::post('/deletenote','NotesController@deleteNote'); 
+Route::post('/makelabel', 'LabelController@makeLabel');
+Route::post('/editlabel', 'LabelController@editLabel');
+
+
 });

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use Facades\App\Notes;
-use App\NoteImages;
 
 //use App\Notes;
   
@@ -57,7 +56,7 @@ class NotesController extends Controller
     {   
         $data = $req->all();
         $notes = Cache::get('notes' . Auth::user()->id);
-       // $note = Notes::with('labels')->where('id', $req->get('id'));
+        $note = Notes::with('labels')->where('id', $req->get('id'));
         $notes->update(
             [
                 'id' => $req->get('id'),
@@ -89,7 +88,7 @@ class NotesController extends Controller
     /**
      * function to delete a note of the user
      * 
-     *  @return Response
+     * @return Response
      */
     public function deleteNote(Request $req)
     {
