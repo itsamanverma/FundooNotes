@@ -41,7 +41,7 @@ Route::post('sociallogin', 'UserController@socialLogin');
 
 /**
  * for authentication checking authentication users
- * @
+ * @0
  */
 
 Route::group(['middleware' => 'auth:api'], function(){
@@ -53,6 +53,8 @@ Route::post('/editnote','NotesController@editNotes');
 Route::post('/deletenote','NotesController@deleteNote'); 
 Route::post('/makelabel', 'LabelController@makeLabel');
 Route::post('/editlabel', 'LabelController@editLabel');
+Route::post('/deletelabel', 'LabelController@deleteLabel');
+Route::post('/addnotelabel', 'LabelController@addNoteLabel');
 
 
 });

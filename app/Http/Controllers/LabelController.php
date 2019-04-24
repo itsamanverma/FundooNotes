@@ -14,6 +14,9 @@ class LabelController extends Controller
 {
    /**
      * Function to make a new label for the user in the data base
+     * 
+     * @param Request 
+     * @return json object of label
      */
     public function makeLabel(Request $req)
     {
@@ -67,6 +70,8 @@ class LabelController extends Controller
     }
     /**
      * function to edit the label 
+     * @param Request 
+     * @return json object
      */
     public function editLabel(Request $req)
     {
@@ -82,4 +87,51 @@ class LabelController extends Controller
             return response()->json(['message' => 'Label Not Found', 204]);
         }
     }   
+
+
+    /**
+     * function to add the label to the given note
+     * @param Request 
+     * @return json object of labels_notes
+     */
+     public function addNoteLabel(Request $req){
+
+        //request contains the following values
+        $label['labelid'] = $req->get('labelid');
+        $label['noteid'] = $req->get('noteid');
+        $label['userid'] = Auth::user()->id;
+
+        //declaring message for the customize error validation
+        $messages = [
+            'labelid.unique' => 'Note Already have a label'
+        ];
+
+            //validation for duplicate label of the same user
+            $validator = Validator::make(
+            $label,
+            [
+                'labelid' => [
+                    'required',
+                    Rule::unique('labels_notes')->where(function ($query) use ($label) {
+                        return $query->where('labelid', $label['labelid'])
+                            ->where('noteid', $label['noteid']);
+                    }),
+                ],
+            ],
+            $messages
+        );
+            //if validator fails means that the label is already added to the note
+            if ($validator->fails()) {
+            $err = $validator->errors();
+            //the it returns the error in the response 
+            return response()->json(['message' => $err], 210);
+        }
+         //or map the label to the note 
+         LabelsNotes::create($label);
+        
+        //fetching the newly added note from the database
+         $note = Notes::with('labels')->where('id', $req->get('noteid'));
+         return response()->json(['note'=>$note->get()], 200);
+    } 
+    
 }
