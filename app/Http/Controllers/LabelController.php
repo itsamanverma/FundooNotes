@@ -134,4 +134,42 @@ class LabelController extends Controller
          return response()->json(['note'=>$note->get()], 200);
     } 
     
+    /**
+     * function to delete the label from the note 
+     * 
+     * @var req Request 
+     */
+    public function deleteNoteLabel(Request $req)
+    {
+        $label['labelid'] = $req->get('labelid');
+        $label['noteid'] = $req->get('noteid');
+        $messages = [
+            'labelid.unique' => 'Note has this label',
+        ];
+
+        //validation for duplicate label of the same user
+        $validator = Validator::make(
+            $label,
+            [
+                'labelid' => [
+                    'required',
+                    Rule::unique('labels_notes')->where(function ($query) use ($label) {
+                        return $query->where('labelid', $label['labelid'])
+                            ->where('noteid', $label['noteid']);
+                    }),
+                ],
+            ],
+            $messages
+        );
+        if ($validator->fails()) {
+            $ll = LabelsNotes::where('labelid', $label['labelid'])->where('noteid',$label['noteid'])->first();
+            $ll->delete();
+            $note = Notes::with('labels')->where('id', $label['noteid'])->get();
+            return response()->json(['note'=>$note], 200);
+        }
+        else{
+            return response()->json(['message' => 'label not found'], 210);
+        }
+       
+    }
 }

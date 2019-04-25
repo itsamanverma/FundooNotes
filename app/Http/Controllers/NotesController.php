@@ -65,9 +65,9 @@ class NotesController extends Controller
                 'reminder' => $req->get('reminder'),
                 'color' => $req->get('color'),
                 'userid' => $req->get('userid'),
-                'pinned' => $req->get('pinned'),
-                'archived' => $req->get('archived'),
-                'deleted' => $req->get('deleted'),
+                'ispinned' => $req->get('ispinned'),
+                'isarchived' => $req->get('isarchived'),
+                'istrash' => $req->get('istrash'),
  
             ]
         );
@@ -155,5 +155,23 @@ class NotesController extends Controller
             return response()->json(["message" => "success"], 200);
         }
     }
+
+    // /**
+    //  * function for the transh note 
+    //  * 
+    //  * @param Request
+    //  * @return status
+    //  */
+    // public function trashNote(Request $req){
+
+    //     $notes = Cache::get('notes' . Auth::user()->id);
+    //     $note = Notes::with('labels')->where('id', $req->get('id'));
+    //     $notes->update(
+    //         [
+    //          'istrash' => $req->get('istrash'),
+    //         ]
+    //     );
+
+    // }
  
 }
