@@ -30,13 +30,13 @@ class NotesController extends Controller
     } 
     
     /**
-     * Function to getb all the notes of the user
+     * Function to get all the notes of the user
      * 
      * @return response
      */
     public function getNotes()
     {
-        Cache::forget('notes' . Auth::user()->id);
+         Cache::forget('notes' . Auth::user()->id);
          $notes = Cache::remember('notes' . Auth::user()->id, (30), function () {
          $nn = Notes::with('labels')->where('userid', Auth::user()->id)->get();
             return $nn;
@@ -156,22 +156,15 @@ class NotesController extends Controller
         }
     }
 
-    // /**
-    //  * function for the transh note 
-    //  * 
-    //  * @param Request
-    //  * @return status
-    //  */
-    // public function trashNote(Request $req){
-
-    //     $notes = Cache::get('notes' . Auth::user()->id);
-    //     $note = Notes::with('labels')->where('id', $req->get('id'));
-    //     $notes->update(
-    //         [
-    //          'istrash' => $req->get('istrash'),
-    //         ]
-    //     );
-
-    // }
  
+
+    /**
+     * create the function to note search 
+     * 
+     * @param title
+     * @return note
+     */
+    public function searchNote(Request $req){
+        $note=Notes::with('labels')->where('title',$req->get('title'));
+     }
 }

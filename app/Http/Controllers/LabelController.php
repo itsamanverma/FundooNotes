@@ -133,7 +133,7 @@ class LabelController extends Controller
          $note = Notes::with('labels')->where('id', $req->get('noteid'));
          return response()->json(['note'=>$note->get()], 200);
     } 
-    
+       
     /**
      * function to delete the label from the note 
      * 
@@ -170,6 +170,6 @@ class LabelController extends Controller
         else{
             return response()->json(['message' => 'label not found'], 210);
         }
-       
+        
     }
 }

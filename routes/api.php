@@ -55,6 +55,4 @@ Route::post('/makelabel', 'LabelController@makeLabel');
 Route::post('/editlabel', 'LabelController@editLabel');
 Route::post('/deletelabel', 'LabelController@deleteLabel');
 Route::post('/addnotelabel', 'LabelController@addNoteLabel');
-
-
 });
