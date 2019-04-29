@@ -164,7 +164,16 @@ class NotesController extends Controller
      * @param title
      * @return note
      */
-    public function searchNote(Request $req){
-        $note=Notes::with('labels')->where('title',$req->get('title'));
+    public function searchNotes(Request $req)
+    {
+        $data = $req->all();
+        $notes = Cache::get('notes' . Auth::user()->title);
+        $note = Notes::with('labels')->where('title', $req->get('title'));
+        $note=Notes::with('labels')
+        ->where('title',$req->get('title'))
+        ->where(function($query)
+        {
+            $qurey->where('title','LIKE','%')->orwhere('id','LIKE','%');
+        });
      }
 }
