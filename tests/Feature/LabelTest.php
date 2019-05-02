@@ -15,8 +15,27 @@ class LabelTest extends TestCase
      */
     public function testExample()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+      $this->assertTrue(true);
     }
+
+    /**
+     * write the function to test the label creation 
+     * 
+     * @return void
+     */
+     public function testLabelCreate()
+     {
+        $user = factory(User::class)->create();
+        //authenticating as the user
+        Passport::actingAs($user);
+
+        $response = $this->withHeaders([
+            'Content-Type' => 'Application/json',
+        ])->json('POST', '/api/makelabel',[
+            
+            'label'=>'amansu label',
+        ]);
+
+        $response->assertStatus(201)->assertJson(['message' => 'Note Created']);
+     }
 }

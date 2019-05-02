@@ -62,5 +62,26 @@ class NotesTest extends TestCase
         
         $response->assertStatus(200)->assertSuccessful();
     }
+    // /**
+    //  * Atest to cheeck for the search notes based on user id of tghe users & title
+    //  * 
+    //  * @retrun Note based on title
+    //  */
+    // public function test_searchNotesBasedOnTitle($title){
+    //   $user = factory(User::class)->create();
+    //   //authentication as per user
+    //   Passport::actingAs($user);
+
+    //   //no authentication request
+    //   $response = $this->withHeaders([
+    //       'Contrnt-Type' =>'Application/json',
+    //   ])->json('POST','/api/searchNotes' [
+    //       'userid' => '3',
+    //       'title' => 'ama',
+           
+    //   ]);
+
+    //   $response->assertstatus(200)->assertJsonCount(1);
+    // }
 
 }
