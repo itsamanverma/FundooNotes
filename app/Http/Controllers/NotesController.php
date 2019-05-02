@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use Facades\App\Notes;
+use Illuminate\Support\Collection;
+
 
 //use App\Notes;
   
@@ -157,23 +159,21 @@ class NotesController extends Controller
     }
 
  
-
     /**
-     * create the function to note search 
-     * 
-     * @param title
-     * @return note
+     * Use the where method to find data that matches a given
+     * criteria.
+     *
+     * Chain the methods for fine-tuned criteria
+     * @param Request
+     * @return required node based on title,body & label & get the userid
      */
     public function searchNotes(Request $req)
-    {
-        $data = $req->all();
-        $notes = Cache::get('notes' . Auth::user()->title);
-        $note = Notes::with('labels')->where('title', $req->get('title'));
-        $note=Notes::with('labels')
-        ->where('title',$req->get('title'))
-        ->where(function($query)
-        {
-            $qurey->where('title','LIKE','%')->orwhere('id','LIKE','%');
+    {   
+        $notes = Notes::all();
+        $filter = $collection->filter(Function($value,$title){
+            return collect($notes->toArray())->$value('LIKE','%')
+            ->only(['id','title','body','reminder','color','userid','ispinned','isarchived','istrash','index'])
+            ->all();
         });
-     }
+    }
 }
