@@ -169,11 +169,11 @@ class NotesController extends Controller
      */
     public function searchNotes(Request $req)
     {   
-        $notes = Notes::all();
-        $filter = $collection->filter(Function($value,$title){
-            return collect($notes->toArray())->$value('LIKE','%')
-            ->only(['id','title','body','reminder','color','userid','ispinned','isarchived','istrash','index'])
-            ->all();
+        $notes = Notes::with('labels')->where('id', $req->get('id'));
+        $filter = $notes->filter(Function($value,$title){
+            return collect($filter->toArray())->$value('LIKE','%')
+            ->only(['id','title','body','reminder','color','userid','ispinned','isarchived','istrash','index']);
+            $filter->all();
         });
     }
 }

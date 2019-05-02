@@ -50,7 +50,7 @@ Route::get('/logout','UserController@logout');
 Route::get('/getnotes','NotesController@getNotes');
 Route::post('/createnote','NotesController@create');
 Route::post('/editnote','NotesController@editNotes');
-Route::get('/searchNotes','NotesController@searchNotes');
+Route::post('/searchNotes','NotesController@searchNotes');
 Route::post('/deletenote','NotesController@deleteNote'); 
 Route::post('/makelabel', 'LabelController@makeLabel');
 Route::post('/editlabel', 'LabelController@editLabel');
