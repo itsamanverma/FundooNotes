@@ -162,6 +162,7 @@ class NotesController extends Controller
     /**
      * Use the where method to find data that matches a given
      * criteria.
+     * using the collection concepts to filter the notes
      *
      * Chain the methods for fine-tuned criteria
      * @param Request
