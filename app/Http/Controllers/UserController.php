@@ -1,22 +1,12 @@
 <?php
 namespace App\Http\Controllers;
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
-//header("Access-Control-Allow-Headers: Authorization");
-//header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept, Origin, Authorization
-//');
 header("Access-Control-Request-Method: POST");
 
-//   headers.append('Content-Type', 'application/json');
-//   headers.append('Accept', 'application/json');
-
-//   headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   headers.append('Access-Control-Allow-Credentials', 'true');
-
-//   headers.append('GET', 'POST', 'OPTIONS');
-
 use App\User;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
