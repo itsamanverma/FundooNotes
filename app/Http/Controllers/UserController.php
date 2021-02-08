@@ -37,6 +37,7 @@ class UserController extends Controller
      *          type="string",
      *    ),
      *   @SWG\Response(response=200, description="successful Login",),
+     *   @SWG\Response(response=204, description="unauthoried user"),
      *   @SWG\Response(response=406, description="not acceptable",),
      *   @SWG\Response(response=500, description="internal server error",),
      * )

@@ -39,6 +39,9 @@
                     "200": {
                         "description": "successful Login"
                     },
+                    "204": {
+                        "description": "unauthoried user"
+                    },
                     "406": {
                         "description": "not acceptable"
                     },
