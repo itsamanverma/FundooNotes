@@ -5,6 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Request-Method: POST");
 
+
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -12,14 +13,38 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Events\UserRegistered;
 
+
 class UserController extends Controller
 {
     public $successStatus = 200;
-/**
- * login api
- *
- * @return \Illuminate\Http\Response
- */
+    /**
+     * @SWG\Post(
+     *   path="api/login",
+     *   summary="login",
+     *   description="login the user which email & password matched",
+     *      @SWG\parameter(
+     *          name="{email}",
+     *          in="path",
+     *          description="Email",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *     @SWG\parameter(
+     *          name="{password}",
+     *          in="path",
+     *          description="Password",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *   @SWG\Response(response=200, description="successful Login",),
+     *   @SWG\Response(response=406, description="not acceptable",),
+     *   @SWG\Response(response=500, description="internal server error",),
+     * )
+     *
+     * Display a auth user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function login()
     {
         $email = request('email');

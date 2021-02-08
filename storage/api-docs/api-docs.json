@@ -1,0 +1,53 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Swagger Integration with PHP Laravel",
+        "description": "Integrate Swagger in Laravel application",
+        "contact": {
+            "email": "amanvermame786@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "127.0.0.1:8000",
+    "basePath": "",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "api/login": {
+            "post": {
+                "summary": "login",
+                "description": "login the user which email & password matched",
+                "parameters": [
+                    {
+                        "name": "{email}",
+                        "in": "path",
+                        "description": "Email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "{password}",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful Login"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}

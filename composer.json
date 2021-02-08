@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
+        "darkaonline/l5-swagger": "5.8.0",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "fzaninotto/faker": "^1.8",
@@ -17,7 +18,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
         "unisharp/laravel-ckeditor": "^4.7",
-        "zircote/swagger-php": "^3.0"
+        "zircote/swagger-php": "2.*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
