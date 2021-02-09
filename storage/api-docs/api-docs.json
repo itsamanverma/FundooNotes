@@ -50,6 +50,63 @@
                     }
                 }
             }
+        },
+        "api/register": {
+            "post": {
+                "summary": "register",
+                "description": "register the user for login",
+                "parameters": [
+                    {
+                        "name": "{firstname}",
+                        "in": "path",
+                        "description": "FirstName",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "{lastname}",
+                        "in": "path",
+                        "description": "LastName",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "{email}",
+                        "in": "path",
+                        "description": "Email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "{password}",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "{C_password}",
+                        "in": "path",
+                        "description": "Confirm Password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful Register"
+                    },
+                    "201": {
+                        "description": "error with user"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {}

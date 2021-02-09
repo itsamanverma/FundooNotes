@@ -21,3 +21,7 @@ Route::resource('posts','PostsController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/listview', function ($id) {
+    return view('/listview');
+});

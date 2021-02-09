@@ -18,7 +18,8 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
         "unisharp/laravel-ckeditor": "^4.7",
-        "zircote/swagger-php": "2.*"
+        "zircote/swagger-php": "2.*",
+        "renatomarinho/laravel-page-speed": "^1.8"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

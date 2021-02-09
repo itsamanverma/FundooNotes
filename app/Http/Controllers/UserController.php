@@ -65,10 +65,55 @@ class UserController extends Controller
         }
     }
 /**
- * Register api
- *
- * @return \Illuminate\Http\Response
- */
+     * @SWG\Post(
+     *   path="api/register",
+     *   summary="register",
+     *   description="register the user for login",
+     *      @SWG\parameter(
+     *          name="{firstname}",
+     *          in="path",
+     *          description="FirstName",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *     @SWG\parameter(
+     *          name="{lastname}",
+     *          in="path",
+     *          description="LastName",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *    @SWG\parameter(
+     *          name="{email}",
+     *          in="path",
+     *          description="Email",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *    @SWG\parameter(
+     *          name="{password}",
+     *          in="path",
+     *          description="Password",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *    @SWG\parameter(
+     *          name="{C_password}",
+     *          in="path",
+     *          description="Confirm Password",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *   @SWG\Response(response=200, description="successful Register",),
+     *   @SWG\Response(response=201, description="error with user"),
+     *   @SWG\Response(response=406, description="not acceptable",),
+     *   @SWG\Response(response=500, description="internal server error",),
+     * )
+     *
+     * Display a auth user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request)
     {   
         $input = $request->all();
