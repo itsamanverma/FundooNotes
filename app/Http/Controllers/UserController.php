@@ -22,7 +22,7 @@ class UserController extends Controller
      *   path="api/login",
      *   summary="login",
      *   description="login the user which email & password matched",
-     *      @SWG\parameter(
+     *      @SWG\Parameter(
      *          name="{email}",
      *          in="path",
      *          description="Email",

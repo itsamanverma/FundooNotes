@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *     version="1.0.0",
  *     title="Swagger Integration with PHP Laravel",
  *     description="Integrate Swagger in Laravel application",
- *     @SWG\contact(
+ *   @SWG\Contact(
  *          email="amanvermame786@gmail.com"
  *     ),
  *   )
