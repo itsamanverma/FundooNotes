@@ -17,6 +17,85 @@ use App\Events\UserRegistered;
 class UserController extends Controller
 {
     public $successStatus = 200;
+
+    /**
+     * @SWG\Post(
+     *   path="api/register",
+     *   summary="register",
+     *   description="register the user for login",
+     *      @SWG\Parameter(
+     *          name="{firstname}",
+     *          in="path",
+     *          description="FirstName",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *     @SWG\Parameter(
+     *          name="{lastname}",
+     *          in="path",
+     *          description="LastName",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *    @SWG\Parameter(
+     *          name="{email}",
+     *          in="path",
+     *          description="Email",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *    @SWG\Parameter(
+     *          name="{password}",
+     *          in="path",
+     *          description="Password",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *    @SWG\Parameter(
+     *          name="{C_password}",
+     *          in="path",
+     *          description="Confirm Password",
+     *          required=true,
+     *          type="string",
+     *    ),
+     *   @SWG\Response(response=200, description="successful Register",),
+     *   @SWG\Response(response=201, description="error with user"),
+     *   @SWG\Response(response=406, description="not acceptable",),
+     *   @SWG\Response(response=500, description="internal server error",),
+     * )
+     *
+     * Display a auth user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {   
+        $input = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|string|max:25',
+            'lastname' => 'required|string|max:25',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|max:15',
+            'c_password' => 'required|same:password',
+        ]); 
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 201);
+        }
+
+        // $input = $request->all();
+        $input['created_at'] = now();
+        $input['password'] = bcrypt($input['password']);
+        $input['verifytoken'] = str_random(60);
+        $user = User::create($input);
+        $success['token'] = $user->createToken('fundoo')->accessToken;
+        $success['firstname'] = $user->firstname;
+
+        event(new UserRegistered($user,$user->verifytoken));
+        return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
+    }
+
     /**
      * @SWG\Post(
      *   path="api/login",
@@ -49,100 +128,27 @@ class UserController extends Controller
     public function login()
     {
         $email = request('email');
+
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            //$success['token'] = $user->createToken('MyApp')->accessToken;
+            
             if($user->email_verified_at === null){
                return  response()->json(['message' => 'Email Not verified'],211);
             }
               $token = $user->createToken('fundoo')->accessToken;
-              return response()->json(['token' => $token,'userdetails'=>Auth::user()],200);
-            // return response()->json(123456);
 
-            //return response()->json(['success' => $success], $this->successStatus);
+              return response()->json(['token' => $token,'userdetails'=>Auth::user()],200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 204);
         }
     }
-/**
-     * @SWG\Post(
-     *   path="api/register",
-     *   summary="register",
-     *   description="register the user for login",
-     *      @SWG\parameter(
-     *          name="{firstname}",
-     *          in="path",
-     *          description="FirstName",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *     @SWG\parameter(
-     *          name="{lastname}",
-     *          in="path",
-     *          description="LastName",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *    @SWG\parameter(
-     *          name="{email}",
-     *          in="path",
-     *          description="Email",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *    @SWG\parameter(
-     *          name="{password}",
-     *          in="path",
-     *          description="Password",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *    @SWG\parameter(
-     *          name="{C_password}",
-     *          in="path",
-     *          description="Confirm Password",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *   @SWG\Response(response=200, description="successful Register",),
-     *   @SWG\Response(response=201, description="error with user"),
-     *   @SWG\Response(response=406, description="not acceptable",),
-     *   @SWG\Response(response=500, description="internal server error",),
-     * )
-     *
-     * Display a auth user.
+
+    
+    /**
+     * details api
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
-    {   
-        $input = $request->all();
-
-        $validator = Validator::make($request->all(), [
-            'firstname' => 'required|string|max:25',
-            'lastname' => 'required|string|max:25',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|max:15',
-            'c_password' => 'required|same:password',
-        ]); 
-        if ($validator->fails()) {
-        return response()->json(['error' => $validator->errors()], 201);
-        }
-        // $input = $request->all();
-        $input['created_at'] = now();
-        $input['password'] = bcrypt($input['password']);
-        $input['verifytoken'] = str_random(60);
-        $user = User::create($input);
-        $success['token'] = $user->createToken('fundoo')->accessToken;
-        $success['firstname'] = $user->firstname;
-        event(new UserRegistered($user,$user->verifytoken));
-        return response()->json(['success' => $success,'message' =>'registation successfull'], $this->successStatus);
-    }
-/**
- * details api
- *
- * @return \Illuminate\Http\Response
- */
     public function userDetails()
     {
         // $user = Auth::user();
