@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use App\User;
 use App\PasswordReset;
 use Illuminate\Http\Request;
 use App\Notifications\PasswordResetRequest;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class PasswordResetController extends Controller
 {
     /**
      * create the token password resert
-     * 
+     *
      * @param [string] email
      * @return [string] message
      */
     public function create(Request $request){
       $validate = Validator::make($request->all(),[
         'email' => 'bail|required|email',
-      ]);     
+      ]);
       $user = User::where('email',$request->email)->first();
       if(!$user){
           return response()->json(['message'=> "we can't find a user with that email address."],200);
       }
       $passwordReset = PasswordReset::updateOrCreate(
           ['email'=>$user->email],
-          [ 
+          [
             'email' => $user->email,
             'token' => str_random(60)
           ]
@@ -39,8 +39,8 @@ class PasswordResetController extends Controller
     }
     /**
      * find token password reset
-     * 
-     * @param  [string] token 
+     *
+     * @param  [string] token
      * @return [string] message
      * @return [json] passwordReset Object
      */
@@ -65,15 +65,15 @@ class PasswordResetController extends Controller
       *@param [string] password_conformation
       *@param [string] token
       *@return [string] message
-      *@return [json] user object 
+      *@return [json] user object
       */
       public function reset(Request $request){
        $validate = Validator::make($request->all(),[
           'password' => 'required|min:8|max:15',
           'c_password' => 'required|same:password'
        ]);
-       if($validate->fail()){
-        return response()->json(['message'=>"passwor doesn't match"],201);  
+       if($validate->fails()){
+        return response()->json(['message'=>"password doesn't match"],201);
        }
        $passwordReset = PasswordReset::where([
          ['token',$request->token]

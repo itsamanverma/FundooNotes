@@ -45,7 +45,7 @@ class PasswordResetRequest extends Notification
                     ->line('you are receiving this email because we want the reset the password of particular email id')
                     ->action('Reset Password', url($url))
                     ->line('Link is valid up to 12 hours')
-                    ->line("if you dont want to rese the password,no further action is required");
+                    ->line("if you dont want to reset the password,no further action is required");
     }
 
     /**

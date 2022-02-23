@@ -69,7 +69,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
-    {   
+    {
         $input = $request->all();
 
         $validator = Validator::make($request->all(), [
@@ -78,7 +78,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|max:15',
             'c_password' => 'required|same:password',
-        ]); 
+        ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 201);
@@ -131,7 +131,7 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            
+
             if($user->email_verified_at === null){
                return  response()->json(['message' => 'Email Not verified'],211);
             }
@@ -143,7 +143,7 @@ class UserController extends Controller
         }
     }
 
-    
+
     /**
      * details api
      *
@@ -159,7 +159,7 @@ class UserController extends Controller
 
     /**
      * write the function to verify the user & the add the time stamp to the verified_at field
-     * 
+     *
      * @return response
      */
         public function verifyEmail($token){
@@ -171,7 +171,7 @@ class UserController extends Controller
         }else if($user->email_verified_at === null){
          $user->email_verified_at = now();
          $user->save();
-            return response()->json(['message' => "Email is Successfully verified"],201);      
+            return response()->json(['message' => "Email is Successfully verified"],201);
         }else{
             return response()->json(['message' => "Email Already verified"],202);
         }
@@ -179,7 +179,7 @@ class UserController extends Controller
 
     /**
      * write the function for forgot password.
-     * 
+     *
      * @return response
      */
     public function forgotPassword(){
@@ -191,8 +191,8 @@ class UserController extends Controller
         }
     }
       /**
-       * write the function logout 
-       * 
+       * write the function logout
+       *
        * @group logout
        * @return response
        */
@@ -212,7 +212,7 @@ class UserController extends Controller
         {
             $input = $request->all();
             /* $input['created_at'] = now(); */
-            $input['password'] = bycrypt(str_random(8));
+            $input['password'] = bcrypt(str_random(8));
             $input['verifytoken'] = str_random(60);
 
             $user = User::where([['email',$input['email']]])->first();
@@ -227,12 +227,12 @@ class UserController extends Controller
             $user->save();
             Auth::login($user,true);
             $token = Auth::user()->createtoken('fundoo')->accessToken;
-            return response()->json(['token' => $token ,'userdetails' => Auth::user()],200);   
+            return response()->json(['token' => $token ,'userdetails' => Auth::user()],200);
         }
 
         /**
           * function to add the profile pic of the user
-          * 
+          *
           * @var Request
           * @return Response
           */
@@ -260,4 +260,4 @@ class UserController extends Controller
         }
      }
 }
- 
+

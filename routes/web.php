@@ -25,3 +25,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/listview', function ($id) {
     return view('/listview');
 });
+
+Route::get('/upload', 'VideoUploadController@showUploadForm');
+Route::post('/upload', 'VideoUploadController@storeUploads');

@@ -15,42 +15,6 @@
         "https"
     ],
     "paths": {
-        "api/login": {
-            "post": {
-                "summary": "login",
-                "description": "login the user which email & password matched",
-                "parameters": [
-                    {
-                        "name": "{email}",
-                        "in": "path",
-                        "description": "Email",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "{password}",
-                        "in": "path",
-                        "description": "Password",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful Login"
-                    },
-                    "204": {
-                        "description": "unauthoried user"
-                    },
-                    "406": {
-                        "description": "not acceptable"
-                    },
-                    "500": {
-                        "description": "internal server error"
-                    }
-                }
-            }
-        },
         "api/register": {
             "post": {
                 "summary": "register",
@@ -98,6 +62,42 @@
                     },
                     "201": {
                         "description": "error with user"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "api/login": {
+            "post": {
+                "summary": "login",
+                "description": "login the user which email & password matched",
+                "parameters": [
+                    {
+                        "name": "{email}",
+                        "in": "path",
+                        "description": "Email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "{password}",
+                        "in": "path",
+                        "description": "Password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful Login"
+                    },
+                    "204": {
+                        "description": "unauthoried user"
                     },
                     "406": {
                         "description": "not acceptable"
