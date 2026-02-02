@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\PasswordReset;
 use Illuminate\Http\Request;
 use App\Notifications\PasswordResetRequest;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class PasswordResetController extends Controller
 {
@@ -29,7 +30,7 @@ class PasswordResetController extends Controller
           ['email'=>$user->email],
           [ 
             'email' => $user->email,
-            'token' => str_random(60)
+            'token' => Str::random(60)
           ]
       );
       if($user && $passwordReset){
@@ -83,7 +84,7 @@ class PasswordResetController extends Controller
        $user = User::where('email',$passwordReset->email)->first();
        if(!$user)
        return response()->json(['message' =>"we can't find the user with that e-mail address"],200);
-       $user->password =bcrypt($request->password);
+       $user->password = bcrypt($request->password);
        $user->save();
        $passwordReset->delete();
        return response()->json(['message' =>'password Reset Successfuly!'],201);

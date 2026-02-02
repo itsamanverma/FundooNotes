@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+// Note: Laravel 9 Auth scaffolding has changed. 
+// Install laravel/ui if you need traditional auth controllers
 
 class ForgotPasswordController extends Controller
 {
@@ -18,7 +19,7 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
+    // use SendsPasswordResetEmails; // Commented out - not available in Laravel 9
 
     /**
      * Create a new controller instance.

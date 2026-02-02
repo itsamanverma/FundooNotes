@@ -5,63 +5,58 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Request-Method: POST");
 
-
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Events\UserRegistered;
 
-
+/**
+ * @OA\Info(
+ *     version="1.0.0",
+ *     title="FundooNotes API Documentation",
+ *     description="API documentation for FundooNotes application",
+ *     @OA\Contact(
+ *         email="admin@fundoonotes.com"
+ *     ),
+ * )
+ */
 class UserController extends Controller
 {
     public $successStatus = 200;
 
     /**
-     * @SWG\Post(
-     *   path="api/register",
-     *   summary="register",
-     *   description="register the user for login",
-     *      @SWG\Parameter(
-     *          name="{firstname}",
-     *          in="path",
-     *          description="FirstName",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *     @SWG\Parameter(
-     *          name="{lastname}",
-     *          in="path",
-     *          description="LastName",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *    @SWG\Parameter(
-     *          name="{email}",
-     *          in="path",
-     *          description="Email",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *    @SWG\Parameter(
-     *          name="{password}",
-     *          in="path",
-     *          description="Password",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *    @SWG\Parameter(
-     *          name="{C_password}",
-     *          in="path",
-     *          description="Confirm Password",
-     *          required=true,
-     *          type="string",
-     *    ),
-     *   @SWG\Response(response=200, description="successful Register",),
-     *   @SWG\Response(response=201, description="error with user"),
-     *   @SWG\Response(response=406, description="not acceptable",),
-     *   @SWG\Response(response=500, description="internal server error",),
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Register a new user",
+     *     description="Register a new user account",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"firstname","lastname","email","password","c_password"},
+     *             @OA\Property(property="firstname", type="string", maxLength=25, example="John"),
+     *             @OA\Property(property="lastname", type="string", maxLength=25, example="Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="john.doe@example.com"),
+     *             @OA\Property(property="password", type="string", minLength=8, maxLength=15, example="password123"),
+     *             @OA\Property(property="c_password", type="string", minLength=8, maxLength=15, example="password123"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful registration",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="object",
+     *                 @OA\Property(property="token", type="string"),
+     *                 @OA\Property(property="name", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Validation error"),
+     *     @OA\Response(response=406, description="Not acceptable"),
+     *     @OA\Response(response=500, description="Internal server error")
      * )
      *
      * Display a auth user.
@@ -87,7 +82,7 @@ class UserController extends Controller
         // $input = $request->all();
         $input['created_at'] = now();
         $input['password'] = bcrypt($input['password']);
-        $input['verifytoken'] = str_random(60);
+        $input['verifytoken'] = Str::random(60);
         $user = User::create($input);
         $success['token'] = $user->createToken('fundoo')->accessToken;
         $success['firstname'] = $user->firstname;
@@ -183,7 +178,7 @@ class UserController extends Controller
      * @return response
      */
     public function forgotPassword(){
-        $validator = validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
            'email' => 'bail|required|email|unique:users',
         ]);
         if($validator->fails()){
@@ -212,8 +207,8 @@ class UserController extends Controller
         {
             $input = $request->all();
             /* $input['created_at'] = now(); */
-            $input['password'] = bycrypt(str_random(8));
-            $input['verifytoken'] = str_random(60);
+            $input['password'] = bcrypt(Str::random(8));
+            $input['verifytoken'] = Str::random(60);
 
             $user = User::where([['email',$input['email']]])->first();
 

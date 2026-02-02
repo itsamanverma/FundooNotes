@@ -163,8 +163,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class, // Re-enabled with Laravel 9 compatible version
         // Unisharp\Ckeditor\ServiceProvider::class, // Commented out - not compatible with Laravel 9
-        // L5Swagger\L5SwaggerServiceProvider::class, // Commented out - not compatible with Laravel 9
         // RenatoMarinho\LaravelPageSpeed\ServiceProvider::class, // Commented out - not compatible with Laravel 9
         /*
          * Package Service Providers...

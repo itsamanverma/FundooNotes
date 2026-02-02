@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Labels;
 use Illuminate\Support\Facades\Auth;
 use App\LabelsNotes;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Facades\App\Notes;
 

@@ -1,14 +1,12 @@
-<!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>{{config('l5-swagger.api.title')}}</title>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{{ l5_swagger_asset('swagger-ui.css') }}" >
-  <link rel="icon" type="image/png" href="{{ l5_swagger_asset('favicon-32x32.png') }}" sizes="32x32" />
-  <link rel="icon" type="image/png" href="{{ l5_swagger_asset('favicon-16x16.png') }}" sizes="16x16" />
-  <style>
+    <meta charset="UTF-8">
+    <title>{{config('l5-swagger.documentations.'.$documentation.'.api.title')}}</title>
+    <link rel="stylesheet" type="text/css" href="{{ l5_swagger_asset($documentation, 'swagger-ui.css') }}">
+    <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-32x32.png') }}" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-16x16.png') }}" sizes="16x16"/>
+    <style>
     html
     {
         box-sizing: border-box;
@@ -26,81 +24,144 @@
       margin:0;
       background: #fafafa;
     }
-  </style>
+    </style>
+    @if(config('l5-swagger.defaults.ui.display.dark_mode'))
+        <style>
+            body#dark-mode,
+            #dark-mode .scheme-container {
+                background: #1b1b1b;
+            }
+            #dark-mode .scheme-container,
+            #dark-mode .opblock .opblock-section-header{
+                box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.15);
+            }
+            #dark-mode .operation-filter-input,
+            #dark-mode .dialog-ux .modal-ux,
+            #dark-mode input[type=email],
+            #dark-mode input[type=file],
+            #dark-mode input[type=password],
+            #dark-mode input[type=search],
+            #dark-mode input[type=text],
+            #dark-mode textarea{
+                background: #343434;
+                color: #e7e7e7;
+            }
+            #dark-mode .title,
+            #dark-mode li,
+            #dark-mode p,
+            #dark-mode table,
+            #dark-mode label,
+            #dark-mode .opblock-tag,
+            #dark-mode .opblock .opblock-summary-operation-id,
+            #dark-mode .opblock .opblock-summary-path,
+            #dark-mode .opblock .opblock-summary-path__deprecated,
+            #dark-mode h1,
+            #dark-mode h2,
+            #dark-mode h3,
+            #dark-mode h4,
+            #dark-mode h5,
+            #dark-mode .btn,
+            #dark-mode .tab li,
+            #dark-mode .parameter__name,
+            #dark-mode .parameter__type,
+            #dark-mode .prop-format,
+            #dark-mode .loading-container .loading:after{
+                color: #e7e7e7;
+            }
+            #dark-mode .opblock-description-wrapper p,
+            #dark-mode .opblock-external-docs-wrapper p,
+            #dark-mode .opblock-title_normal p,
+            #dark-mode .response-col_status,
+            #dark-mode table thead tr td,
+            #dark-mode table thead tr th,
+            #dark-mode .response-col_links,
+            #dark-mode .swagger-ui{
+                color: wheat;
+            }
+            #dark-mode .parameter__extension,
+            #dark-mode .parameter__in,
+            #dark-mode .model-title{
+                color: #949494;
+            }
+            #dark-mode table thead tr td,
+            #dark-mode table thead tr th{
+                border-color: rgba(120,120,120,.2);
+            }
+            #dark-mode .opblock .opblock-section-header{
+                background: transparent;
+            }
+            #dark-mode .opblock.opblock-post{
+                background: rgba(73,204,144,.25);
+            }
+            #dark-mode .opblock.opblock-get{
+                background: rgba(97,175,254,.25);
+            }
+            #dark-mode .opblock.opblock-put{
+                background: rgba(252,161,48,.25);
+            }
+            #dark-mode .opblock.opblock-delete{
+                background: rgba(249,62,62,.25);
+            }
+            #dark-mode .loading-container .loading:before{
+                border-color: rgba(255,255,255,10%);
+                border-top-color: rgba(255,255,255,.6);
+            }
+            #dark-mode svg:not(:root){
+                fill: #e7e7e7;
+            }
+            #dark-mode .opblock-summary-description {
+                color: #fafafa;
+            }
+        </style>
+    @endif
 </head>
 
-<body>
-
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
-  <defs>
-    <symbol viewBox="0 0 20 20" id="unlocked">
-          <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"></path>
-    </symbol>
-
-    <symbol viewBox="0 0 20 20" id="locked">
-      <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z"/>
-    </symbol>
-
-    <symbol viewBox="0 0 20 20" id="close">
-      <path d="M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z"/>
-    </symbol>
-
-    <symbol viewBox="0 0 20 20" id="large-arrow">
-      <path d="M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z"/>
-    </symbol>
-
-    <symbol viewBox="0 0 20 20" id="large-arrow-down">
-      <path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/>
-    </symbol>
-
-
-    <symbol viewBox="0 0 24 24" id="jump-to">
-      <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"/>
-    </symbol>
-
-    <symbol viewBox="0 0 24 24" id="expand">
-      <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
-    </symbol>
-
-  </defs>
-</svg>
-
+<body @if(config('l5-swagger.defaults.ui.display.dark_mode')) id="dark-mode" @endif>
 <div id="swagger-ui"></div>
 
-<script src="{{ l5_swagger_asset('swagger-ui-bundle.js') }}"> </script>
-<script src="{{ l5_swagger_asset('swagger-ui-standalone-preset.js') }}"> </script>
+<script src="{{ l5_swagger_asset($documentation, 'swagger-ui-bundle.js') }}"></script>
+<script src="{{ l5_swagger_asset($documentation, 'swagger-ui-standalone-preset.js') }}"></script>
 <script>
-window.onload = function() {
-  // Build a system
-  const ui = SwaggerUIBundle({
-    dom_id: '#swagger-ui',
+    window.onload = function() {
+        // Build a system
+        const ui = SwaggerUIBundle({
+            dom_id: '#swagger-ui',
+            url: "{!! $urlToDocs !!}",
+            operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
+            configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
+            validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
+            oauth2RedirectUrl: "{{ route('l5-swagger.'.$documentation.'.oauth2_callback', [], $useAbsolutePath) }}",
 
-    url: "{!! $urlToDocs !!}",
-    operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
-    configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
-    validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
-    oauth2RedirectUrl: "{{ route('l5-swagger.oauth2_callback') }}",
+            requestInterceptor: function(request) {
+                request.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
+                return request;
+            },
 
-    requestInterceptor: function() {
-      this.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
-      return this;
-    },
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
 
-    presets: [
-      SwaggerUIBundle.presets.apis,
-      SwaggerUIStandalonePreset
-    ],
+            plugins: [
+                SwaggerUIBundle.plugins.DownloadUrl
+            ],
 
-    plugins: [
-      SwaggerUIBundle.plugins.DownloadUrl
-    ],
+            layout: "StandaloneLayout",
+            docExpansion : "{!! config('l5-swagger.defaults.ui.display.doc_expansion', 'none') !!}",
+            deepLinking: true,
+            filter: {!! config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' !!},
+            persistAuthorization: "{!! config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' !!}",
 
-    layout: "StandaloneLayout"
-  })
+        })
 
-  window.ui = ui
-}
+        window.ui = ui
+
+        @if(in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'), 'type')))
+        ui.initOAuth({
+            usePkceWithAuthorizationCodeGrant: "{!! (bool)config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') !!}"
+        })
+        @endif
+    }
 </script>
 </body>
-
 </html>

@@ -170,11 +170,16 @@ class NotesController extends Controller
      */
     public function searchNotes(Request $req)
     {   
-        $notes = Notes::with('labels')->where('id', $req->get('id'));
-        $filter = $notes->filter(Function($value,$title){
-            return collect($filter->toArray())->$value('LIKE','%')
-            ->only(['id','title','body','reminder','color','userid','ispinned','isarchived','istrash','index']);
-            $filter->all();
-        });
+        $searchTerm = $req->get('search', '');
+        $notes = Notes::with('labels')
+            ->where('userid', Auth::user()->id)
+            ->where(function($query) use ($searchTerm) {
+                $query->where('title', 'LIKE', '%' . $searchTerm . '%')
+                      ->orWhere('body', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->select(['id','title','body','reminder','color','userid','ispinned','isarchived','istrash'])
+            ->get();
+            
+        return response()->json(['notes' => $notes], 200);
     }
 }
