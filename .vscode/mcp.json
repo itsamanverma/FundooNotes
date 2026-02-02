@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "FundooNotes Docs": {
+      "type": "sse",
+      "url": "https://gitmcp.io/itsamanverma/FundooNotes"
+    }
+  }
+}

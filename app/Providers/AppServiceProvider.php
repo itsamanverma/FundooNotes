@@ -14,9 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-        $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
-
+        // Commented out L5Swagger as it's not compatible with Laravel 9
+        // $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
     }
 
     /**
