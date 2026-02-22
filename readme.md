@@ -39,13 +39,24 @@ A robust RESTful API for note-taking and organization built with Laravel 9. Fund
 - **Label-Note Relationships** management
 
 ### 🔧 **Technical Features**
-- **RESTful API** with OpenAPI 3.0 documentation
+- **RESTful API** with OpenAPI 3.0 documentation (Swagger UI)
 - **JWT Authentication** via Laravel Passport
 - **Email Notifications** with SMTP configuration
 - **Input Validation** with comprehensive rules
 - **Error Handling** with JSON responses
 - **CORS Support** for frontend integration
 - **Database Relationships** with Eloquent ORM
+
+### 🖥️ **API Endpoints**
+- **Authentication**: /register, /login, /verifyemail/{token}, /forgotpassword, /forgotpassword/reset, /sociallogin
+- **Notes**: /getnotes, /createnote, /editnote, /searchNotes, /deletenote
+- **Labels**: /makelabel, /editlabel, /deletelabel, /addnotelabel
+- **User**: /userDetails, /logout
+
+### 🗂️ **Other Features**
+- Interactive API documentation via Swagger UI
+- Request/response examples and authentication testing
+- Downloadable OpenAPI 3.0 specification
 
 ---
 
