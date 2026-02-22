@@ -13,8 +13,21 @@ use Illuminate\Support\Str;
 class PasswordResetController extends Controller
 {
     /**
+     * @OA\Post(
+     *     path="/api/forgotpassword",
+     *     summary="Request a password reset email",
+     *     tags={"Password"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email", example="user@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Password reset email sent"),
+     *     @OA\Response(response=200, description="User not found")
+     * )
      * create the token password resert
-     * 
      * @param [string] email
      * @return [string] message
      */
@@ -39,8 +52,21 @@ class PasswordResetController extends Controller
       return response()->json(['message' => 'we have emailed your password reset link to respective mailid'],201);
     }
     /**
+     * @OA\Post(
+     *     path="/api/forgotpassword/find",
+     *     summary="Find a password reset token",
+     *     tags={"Password"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"token"},
+     *             @OA\Property(property="token", type="string", example="reset-token-value")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Token valid"),
+     *     @OA\Response(response=200, description="Token invalid")
+     * )
      * find token password reset
-     * 
      * @param  [string] token 
      * @return [string] message
      * @return [json] passwordReset Object
@@ -58,16 +84,32 @@ class PasswordResetController extends Controller
            return response()->json(['message' => $passwordReset],201);
      }
 
-     /**
-      *Reset password
-      *
-      *@param [string] email
-      *@param [string] password
-      *@param [string] password_conformation
-      *@param [string] token
-      *@return [string] message
-      *@return [json] user object 
-      */
+    /**
+     * @OA\Post(
+     *     path="/api/forgotpassword/reset",
+     *     summary="Reset password",
+     *     tags={"Password"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email","password","c_password","token"},
+     *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", minLength=8, maxLength=15, example="newpassword123"),
+     *             @OA\Property(property="c_password", type="string", minLength=8, maxLength=15, example="newpassword123"),
+     *             @OA\Property(property="token", type="string", example="reset-token-value")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Password reset successful"),
+     *     @OA\Response(response=200, description="Token or user invalid")
+     * )
+     * Reset password
+     * @param [string] email
+     * @param [string] password
+     * @param [string] password_conformation
+     * @param [string] token
+     * @return [string] message
+     * @return [json] user object 
+     */
       public function reset(Request $request){
        $validate = Validator::make($request->all(),[
           'password' => 'required|min:8|max:15',

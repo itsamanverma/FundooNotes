@@ -19,8 +19,23 @@ class NotesController extends Controller
     {}
  
     /**
+     * @OA\Post(
+     *     path="/api/createnote",
+     *     summary="Create a new note",
+     *     tags={"Notes"},
+     *     security={{"passport": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"title","body"},
+     *             @OA\Property(property="title", type="string", example="My Note"),
+     *             @OA\Property(property="body", type="string", example="This is a note body")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Note Created"),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
      * Function to create new note
-     * 
      * @return response
      */
      public function create(Request $req)
@@ -32,8 +47,15 @@ class NotesController extends Controller
     } 
     
     /**
+     * @OA\Get(
+     *     path="/api/getnotes",
+     *     summary="Get all notes for the authenticated user",
+     *     tags={"Notes"},
+     *     security={{"passport": {}}},
+     *     @OA\Response(response=200, description="List of notes"),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
      * Function to get all the notes of the user
-     * 
      * @return response
      */
     public function getNotes()
@@ -50,9 +72,25 @@ class NotesController extends Controller
     }
  
     /**
+     * @OA\Post(
+     *     path="/api/editnote",
+     *     summary="Edit a note",
+     *     tags={"Notes"},
+     *     security={{"passport": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"id","title","body"},
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="title", type="string", example="Updated Note"),
+     *             @OA\Property(property="body", type="string", example="Updated body")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Note updated"),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
      * Function to edit notes
-     * 
-     *  @return Response
+     * @return Response
      */
     public function editNotes(Request $req)
     {   
@@ -88,8 +126,23 @@ class NotesController extends Controller
     }
  
     /**
+     * @OA\Post(
+     *     path="/api/deletenote",
+     *     summary="Delete a note",
+     *     tags={"Notes"},
+     *     security={{"passport": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"id"},
+     *             @OA\Property(property="id", type="integer", example=1)
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Note deleted"),
+     *     @OA\Response(response=204, description="Note not found"),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
      * function to delete a note of the user
-     * 
      * @return Response
      */
     public function deleteNote(Request $req)

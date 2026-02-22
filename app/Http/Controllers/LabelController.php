@@ -12,12 +12,27 @@ use Facades\App\Notes;
 
 class LabelController extends Controller
 {
-   /**
-     * Function to make a new label for the user in the data base
-     * 
-     * @param Request 
-     * @return json object of label
-     */
+     /**
+         * @OA\Post(
+         *     path="/api/makelabel",
+         *     summary="Create a new label",
+         *     tags={"Labels"},
+         *     security={{"passport": {}}},
+         *     @OA\RequestBody(
+         *         required=true,
+         *         @OA\JsonContent(
+         *             required={"label"},
+         *             @OA\Property(property="label", type="string", example="Work")
+         *         )
+         *     ),
+         *     @OA\Response(response=200, description="Label created"),
+         *     @OA\Response(response=210, description="Duplicate label"),
+         *     @OA\Response(response=401, description="Unauthorized")
+         * )
+         * Function to make a new label for the user in the data base
+         * @param Request 
+         * @return json object of label
+         */
     public function makeLabel(Request $req)
     {
 
@@ -57,9 +72,25 @@ class LabelController extends Controller
         return response()->json(['message' => 'created', 'label' => $ll], 200);
     }
 
-    /**
-     * function to delete a label from user
-     */
+        /**
+         * @OA\Post(
+         *     path="/api/deletelabel",
+         *     summary="Delete a label",
+         *     tags={"Labels"},
+         *     security={{"passport": {}}},
+         *     @OA\RequestBody(
+         *         required=true,
+         *         @OA\JsonContent(
+         *             required={"labelid"},
+         *             @OA\Property(property="labelid", type="integer", example=1)
+         *         )
+         *     ),
+         *     @OA\Response(response=200, description="Label deleted"),
+         *     @OA\Response(response=204, description="Label not found"),
+         *     @OA\Response(response=401, description="Unauthorized")
+         * )
+         * function to delete a label from user
+         */
     public function deleteLabel(Request $req)
     {
         if (Labels::destroy($req->get('labelid')) > 0) {
@@ -68,11 +99,28 @@ class LabelController extends Controller
             return response()->json(['message' => 'label not found'], 204);
         }
     }
-    /**
-     * function to edit the label 
-     * @param Request 
-     * @return json object
-     */
+        /**
+         * @OA\Post(
+         *     path="/api/editlabel",
+         *     summary="Edit a label",
+         *     tags={"Labels"},
+         *     security={{"passport": {}}},
+         *     @OA\RequestBody(
+         *         required=true,
+         *         @OA\JsonContent(
+         *             required={"labelid","label"},
+         *             @OA\Property(property="labelid", type="integer", example=1),
+         *             @OA\Property(property="label", type="string", example="Personal")
+         *         )
+         *     ),
+         *     @OA\Response(response=200, description="Label updated"),
+         *     @OA\Response(response=204, description="Label not found"),
+         *     @OA\Response(response=401, description="Unauthorized")
+         * )
+         * function to edit the label 
+         * @param Request 
+         * @return json object
+         */
     public function editLabel(Request $req)
     {
         $label = Labels::where('id', $req->get('labelid'))->first();
@@ -90,6 +138,23 @@ class LabelController extends Controller
 
 
     /**
+     * @OA\Post(
+     *     path="/api/addnotelabel",
+     *     summary="Add a label to a note",
+     *     tags={"Labels"},
+     *     security={{"passport": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"labelid","noteid"},
+     *             @OA\Property(property="labelid", type="integer", example=1),
+     *             @OA\Property(property="noteid", type="integer", example=2)
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Label added to note"),
+     *     @OA\Response(response=210, description="Note already has label"),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
      * function to add the label to the given note
      * @param Request 
      * @return json object of labels_notes

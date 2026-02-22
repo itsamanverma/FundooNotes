@@ -9,6 +9,484 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/makelabel": {
+            "post": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Create a new label",
+                "operationId": "d83b7715a65ac2f423987f912c94de47",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "label"
+                                ],
+                                "properties": {
+                                    "label": {
+                                        "type": "string",
+                                        "example": "Work"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Label created"
+                    },
+                    "210": {
+                        "description": "Duplicate label"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/deletelabel": {
+            "post": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Delete a label",
+                "operationId": "90674122f0d8b20b85da3e0b370c913c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "labelid"
+                                ],
+                                "properties": {
+                                    "labelid": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Label deleted"
+                    },
+                    "204": {
+                        "description": "Label not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/editlabel": {
+            "post": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Edit a label",
+                "operationId": "f34ccefd94399a919b28837296f74b4c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "labelid",
+                                    "label"
+                                ],
+                                "properties": {
+                                    "labelid": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "label": {
+                                        "type": "string",
+                                        "example": "Personal"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Label updated"
+                    },
+                    "204": {
+                        "description": "Label not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/addnotelabel": {
+            "post": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Add a label to a note",
+                "operationId": "addef3e64b76e1470cf32beca0cd2122",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "labelid",
+                                    "noteid"
+                                ],
+                                "properties": {
+                                    "labelid": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "noteid": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Label added to note"
+                    },
+                    "210": {
+                        "description": "Note already has label"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/createnote": {
+            "post": {
+                "tags": [
+                    "Notes"
+                ],
+                "summary": "Create a new note",
+                "operationId": "a941fd4f4aa499e727c701663b8ed66e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My Note"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "This is a note body"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Note Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/getnotes": {
+            "get": {
+                "tags": [
+                    "Notes"
+                ],
+                "summary": "Get all notes for the authenticated user",
+                "operationId": "7ff5ebca331bbcbf386946a4cd5dc07c",
+                "responses": {
+                    "200": {
+                        "description": "List of notes"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/editnote": {
+            "post": {
+                "tags": [
+                    "Notes"
+                ],
+                "summary": "Edit a note",
+                "operationId": "79349767701b66f57ab043f5cf37dee6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "title",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Note"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Updated body"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Note updated"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/deletenote": {
+            "post": {
+                "tags": [
+                    "Notes"
+                ],
+                "summary": "Delete a note",
+                "operationId": "35ca8f5a30f49523c89085459fde9377",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Note deleted"
+                    },
+                    "204": {
+                        "description": "Note not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/forgotpassword": {
+            "post": {
+                "tags": [
+                    "Password"
+                ],
+                "summary": "Request a password reset email",
+                "operationId": "4b48588ec05201174cca4b2f64d886b1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Password reset email sent"
+                    },
+                    "200": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/forgotpassword/find": {
+            "post": {
+                "tags": [
+                    "Password"
+                ],
+                "summary": "Find a password reset token",
+                "operationId": "22b1de6817d3705ed5f6e5a802e1525d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "reset-token-value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Token valid"
+                    },
+                    "200": {
+                        "description": "Token invalid"
+                    }
+                }
+            }
+        },
+        "/api/forgotpassword/reset": {
+            "post": {
+                "tags": [
+                    "Password"
+                ],
+                "summary": "Reset password",
+                "operationId": "bd75a9dd1dd921307235fb3c47f03807",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "c_password",
+                                    "token"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "maxLength": 15,
+                                        "minLength": 8,
+                                        "example": "newpassword123"
+                                    },
+                                    "c_password": {
+                                        "type": "string",
+                                        "maxLength": 15,
+                                        "minLength": 8,
+                                        "example": "newpassword123"
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "example": "reset-token-value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Password reset successful"
+                    },
+                    "200": {
+                        "description": "Token or user invalid"
+                    }
+                }
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [
@@ -101,6 +579,18 @@
         }
     },
     "tags": [
+        {
+            "name": "Labels",
+            "description": "Labels"
+        },
+        {
+            "name": "Notes",
+            "description": "Notes"
+        },
+        {
+            "name": "Password",
+            "description": "Password"
+        },
         {
             "name": "Authentication",
             "description": "Authentication"
